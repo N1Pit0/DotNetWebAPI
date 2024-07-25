@@ -450,12 +450,9 @@ $RECYCLE.BIN/
 .vscode/*
 !.vscode/*
 !.vscode/settings.json
+.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
 
-/2-Intermediate/9-LINQ(Under Construction)
-
-
-/2.1-LINQ(Under Construction)
