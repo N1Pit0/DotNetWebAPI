@@ -13,7 +13,14 @@
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
         <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="DotnetAPIOld\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="DotnetAPIOld\appsettings.json" />
+      <_ContentIncludedByDefault Remove="DotnetAPIOld\Properties\launchSettings.json" />
     </ItemGroup>
 
 </Project>

@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace SQLSeed
 {
-    public class Program
+    public class Program1
     {
         public static void Main(string[] args)
         {
