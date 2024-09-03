@@ -1,4 +1,5 @@
 ﻿using DotNetWebApp.Data;
+using DotNetWebApp.DTOs;
 using DotNetWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,28 +7,15 @@ namespace DotNetWebApp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    [Obsolete]
+
+    public class UserDpController : ControllerBase
     {
         private readonly DataContextDapper _dapper;
 
-        public UserController(IConfiguration config)
+        public UserDpController(IConfiguration config)
         {
             _dapper = new DataContextDapper(config);
-        }
-
-        [HttpGet("TestConnection")]
-        public IActionResult TestConnection()
-        {
-            try
-            {
-                DateTime currentTime = _dapper.LoadDataSingle<DateTime>("SELECT GETDATE();");
-                return Ok(currentTime);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (for production code, use a logging framework)
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
         }
 
         private readonly string[] _summaries =
@@ -85,7 +73,7 @@ namespace DotNetWebApp.Controllers
 
         
         [HttpPost("AddUser")]
-        public IActionResult AddUser(User user)
+        public IActionResult AddUser(UserToAddDto userToAdd)
         {
             var sql = $@"
                 INSERT INTO TutorialAppSchema.Users
@@ -98,11 +86,11 @@ namespace DotNetWebApp.Controllers
                 )
                 VALUES 
                 (
-                    '{user.FirstName}',
-                    '{user.LastName}',
-                    '{user.Email}',
-                    '{user.Gender}',
-                    '{user.Active}'
+                    '{userToAdd.FirstName}',
+                    '{userToAdd.LastName}',
+                    '{userToAdd.Email}',
+                    '{userToAdd.Gender}',
+                    '{userToAdd.Active}'
                 )";
 
             if (_dapper.Execute(sql)) return Ok();
@@ -110,6 +98,19 @@ namespace DotNetWebApp.Controllers
             throw new Exception("Failed to Add User");
         }
 
+        [HttpDelete("DeleteUser/{userId}")]
+        public IActionResult DeleteUser(int userId)
+        {
+            var sql = $@"
+                    DELETE FROM TutorialAppSchema.Users
+                        WHERE UserId = {userId}";
+            
+            if (_dapper.Execute(sql)) return Ok();
+
+            throw new Exception("Failed to Delete User");
+            
+        }
+        
         public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
         {
             public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
